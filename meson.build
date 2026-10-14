@@ -45,7 +45,7 @@ test('animation', anim_test, args : ['/tmp/props'], is_parallel : false, timeout
 xvfb = find_program('xvfb-run', required : false)
 if xvfb.found()
   dialog_test = executable('dialog_test', 'dialog_test.c',
-    sources : [src_dir / 'dv_props.c'],
+    sources : [src_dir / 'dv_props.c', src_dir / 'dv_dialog_keys.c'],
     c_args : def_src, include_directories : inc, dependencies : dwarvenview_deps)
   test('props-dialog', xvfb, args : ['-a', dialog_test, '/tmp/props'],
        is_parallel : false, timeout : 120)

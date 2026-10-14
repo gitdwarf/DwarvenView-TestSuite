@@ -40,6 +40,13 @@ main (void)
     dv_prefs_free (p);
     p = dv_prefs_load ();
     check ("old config without the key: off, other keys still read", !p->browse_media && p->ctx_dynamic);
+    check ("old config without the key: fullscreen keeps the controls", !p->fullscreen_hide_ui);
+
+    p->fullscreen_hide_ui = TRUE;
+    dv_prefs_save (p);
+    dv_prefs_free (p);
+    p = dv_prefs_load ();
+    check ("fullscreen_hide_ui saved on: reads back on", p->fullscreen_hide_ui);
     dv_prefs_free (p);
 
     g_free (conf);

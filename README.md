@@ -48,6 +48,8 @@ These take the path to a built `dwarvenview` and need Xvfb and xdotool. They sha
 | `prefs_ui.sh BIN` | The Preferences dialog on a 720p screen: it fits without scrolling, and an option ticked then saved is written to the config. |
 | `browse_media.sh BIN` | The media option in the real app: images only by default, audio and video with it on, Ctrl+Left and Ctrl+Right browse like Page Up and Page Down, and a file named directly is always shown (the music icon for audio with no cover). Also needs `import`, python3 PIL. |
 | `fail_placeholder.sh BIN` | A file that is not an image shows the DV placeholder graphic and the "Not a valid image file" text with the loading splash on, off, or delayed. Also needs `import`, python3 PIL. |
+| `dialog_keys.sh BIN` | One keyboard rule for every dialog: Enter accepts, Escape cancels. About, Help and Properties close on either; Preferences saves on Enter and discards on Escape; Space toggles the debug log in About. |
+| `fullscreen_keys.sh BIN` | Fullscreen from the keyboard: F11 toggles, Escape steps a zoom back and then leaves fullscreen, and the "image only" option hides the menu, toolbar and status bar. Needs openbox (a window manager), `import`, python3 PIL. |
 | `tiers.sh BIN IMAGE` | Each Properties tool tier in the real app. |
 | `debug_ui.sh BIN` | The debug log checkbox in About. |
 | `attack_export.sh HARNESS` | Symlinks planted at predictable temp paths must not be followed. |

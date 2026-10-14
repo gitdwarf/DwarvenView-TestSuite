@@ -21,6 +21,6 @@ chk "nothing is saved until Save is pressed" "$([ ! -f $CONF ] && echo 1 || echo
 
 xdotool mousemove 148 34 click 1; sleep 1                       # Browsing tab
 xdotool mousemove 42 104 click 1; sleep 1                       # "Also browse audio and video files"
-xdotool mousemove 391 326 click 1; sleep 1.5                    # Save
+xdotool mousemove 391 384 click 1; sleep 1.5                    # Save (button row sits 34 px above the dialog bottom)
 chk "ticking the option and pressing Save writes browse_media=true" "$(grep -q '^browse_media=true' $CONF 2>/dev/null && echo 1 || echo 0)"
 finish

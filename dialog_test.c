@@ -156,12 +156,12 @@ main (int argc, char **argv)
     check ("showing twice leaves exactly one Properties window", count_props_windows () == 1);
     wait_for (props_win, "Source:", 10000);
 
-    puts ("\n-- Escape closes --");
-    check ("on_key(Escape) consumes the key", on_key (NULL, GDK_KEY_Escape, 0, 0, props_win));
+    /* Escape and Enter closing is covered against the real app in dialog_keys.sh. */
+    puts ("\n-- closing --");
+    gtk_window_destroy (GTK_WINDOW (props_win));
     pump (200);
-    check ("window gone after Escape", props_win == NULL && count_props_windows () == 0);
-    check ("other keys are not consumed", ({ dv_props_dialog_show (GTK_WINDOW (parent), photo);
-        gboolean r = !on_key (NULL, GDK_KEY_a, 0, 0, props_win); r; }));
+    check ("window gone after closing", props_win == NULL && count_props_windows () == 0);
+    dv_props_dialog_show (GTK_WINDOW (parent), photo);
     wait_for (props_win, "Source:", 10000);
     gtk_window_destroy (GTK_WINDOW (props_win));
     pump (100);
