@@ -1,10 +1,13 @@
 /* engine_race: deterministic checks for load cancellation, stale-thread writes and shutdown.
  * usage: engine_race anim|free SLOW_FILE FAST_FILE
+ *        engine_race closeslow SLOW_FILE
  *        engine_race stress FILE... (last file must load fast)
  *        engine_race play ANIMATED_FILE
  *  anim:   start SLOW, 60ms later load FAST, report engine state at once and 4s later
  *  free:   start SLOW, load FAST, dv_engine_free, wait 3s (a stray thread would touch freed memory)
  *  stress: 80 rapid loads across the files with random gaps, then free the engine
+ *  closeslow: start a long load of FILE, dv_engine_free 200ms later; print how long the free took
+ *          and how long the load thread kept running afterwards (free must not wait for it)
  *  play:   load one file, sample the displayed frame 12 times; an animation must show several
  * Build with -fsanitize=address and run with ASAN_OPTIONS=detect_leaks=0 (the harness itself leaks a main loop). */
 #include <glib.h>
@@ -36,6 +39,18 @@ int main (int argc, char **argv)
         GHashTable *seen = g_hash_table_new (NULL, NULL);
         for (int i = 0; i < 12; i++) { g_hash_table_add (seen, dv_engine_get_frame (e)); spin_ms (100); }
         printf ("play: animated=%d distinct_frames_seen=%u\n", dv_engine_is_animated (e), g_hash_table_size (seen));
+        return 0;
+    }
+    if (!g_strcmp0 (argv[1], "closeslow")) {
+        Ctx c = { g_main_loop_new (NULL, FALSE) };
+        dv_engine_load (e, argv[2], on_pass, &c, FALSE, 0.0);
+        spin_ms (200);
+        gint64 t0 = g_get_monotonic_time ();
+        dv_engine_free (e);
+        gint64 t1 = g_get_monotonic_time ();
+        while (nthreads () > base && g_get_monotonic_time () - t0 < 90000000) spin_ms (50);
+        gint64 t2 = g_get_monotonic_time ();
+        printf ("closeslow: free_ms=%ld loader_ran_ms_after=%ld\n", (long) ((t1 - t0) / 1000), (long) ((t2 - t1) / 1000));
         return 0;
     }
     Ctx slow = { g_main_loop_new (NULL, FALSE) };

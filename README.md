@@ -32,6 +32,8 @@ Built by the same option, in `build/tests/`.
 | Tool | Use |
 |------|-----|
 | `engine_probe FILE...` | Loads files in order through the real engine and prints failed, HDR and SVG state after each. `make_engine_fixtures.sh DIR` makes the samples. |
+| `close-while-loading` | `close_while_loading.sh`. Freeing the engine while a big image decodes returns at once; the loader is still running afterwards. |
+| `resize-filter` | `resize_filter.sh`. Scaled exports use spline64 when ffmpeg accepts it and spline36 otherwise (fake ffmpegs on PATH, plus the real one); ffmpeg is asked once. |
 | `engine_race MODE ...` | Load cancellation, shutdown and animation checks. Modes are in the file header. Run it under AddressSanitizer. |
 | `export_harness` | Export filename and temp-path handling, including hostile names. |
 

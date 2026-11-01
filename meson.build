@@ -66,6 +66,12 @@ engine_race = executable('engine_race', 'engine_race.c', sources : engine_srcs,
   include_directories : inc, dependencies : dwarvenview_deps)
 test('video', bash, args : [files('video_test.sh'), engine_probe, engine_race, '/tmp/props'],
      is_parallel : false, timeout : 120)
+test('close-while-loading', bash, args : [files('close_while_loading.sh'), engine_race],
+     is_parallel : false, timeout : 150)
+resize_filter_probe = executable('resize_filter_probe', 'resize_filter_probe.c',
+  sources : [src_dir / 'dv_viewport.c', src_dir / 'dv_prefs.c'],
+  c_args : def_src, include_directories : inc, dependencies : dwarvenview_deps)
+test('resize-filter', bash, args : [files('resize_filter.sh'), resize_filter_probe], timeout : 60)
 executable('export_harness', 'harness.c',
   sources : [src_dir / 'dv_viewport.c', src_dir / 'dv_prefs.c'],
   c_args : def_src, include_directories : inc, dependencies : dwarvenview_deps)
