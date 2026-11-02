@@ -12,6 +12,11 @@ exiftool -q -overwrite_original -Make="Canon" -Model="EOS R5" -LensModel="RF24-7
 cp photo.jpg "ünï cödé 'q' \$(x).jpg"; cp photo.jpg ./-h.jpg; head -c 300 photo.jpg > corrupt.jpg
 ffmpeg -loglevel error -y -f lavfi -i testsrc=size=64x64:rate=5 -t 1 anim.gif
 ffmpeg -loglevel error -y -f lavfi -i testsrc=size=100x50:rate=1 -frames:v 1 plain.png
+python3 -I -c "
+from PIL import Image
+fr = [Image.new('RGB', (64, 64), c) for c in ('red', 'green', 'blue')]
+fr[0].save('plain.webp')
+fr[0].save('anim.webp', save_all=True, append_images=fr[1:], duration=100, loop=0)"
 exiftool -q -overwrite_original -Artist="Zoë 山田" -XMP:Title="日本語のタイトル" plain.png
 printf '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="32"><rect width="64" height="32"/></svg>' > t.svg
 printf 'not an image' > junk.bin

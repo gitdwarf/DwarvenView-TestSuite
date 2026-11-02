@@ -25,6 +25,8 @@ static const Case CASES[] = {
     { "photo.jpg",             TRUE, TRUE, "jpeg" },
     { "anim.gif",              TRUE, TRUE, "gif" },
     { "plain.png",             TRUE, TRUE, "png" },
+    { "plain.webp",            TRUE, TRUE, "webp: the WEBP tag is at offset 8, after the RIFF size" },
+    { "anim.webp",             TRUE, TRUE, "animated webp" },
     { "t.svg",                 TRUE, TRUE, "svg" },
     { "corrupt.jpg",           TRUE, TRUE, "truncated jpeg: signature is enough, the loader decides" },
     { "junk.bin",              FALSE, FALSE, "not an image" },
