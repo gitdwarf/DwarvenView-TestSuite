@@ -1,6 +1,6 @@
 # Tests
 
-Everything here is optional and is not built by default. This directory comes from the separate `dwarvenview-tests-VERSION.zip`; unpack that archive into the source directory to get it.
+Everything here is optional and is not built by default. This is the [DwarvenView-TestSuite](https://github.com/gitdwarf/DwarvenView-TestSuite) repository, also shipped as `dwarvenview-tests-VERSION.zip`. Put it in a `tests/` directory inside the DwarvenView source: `git clone https://github.com/gitdwarf/DwarvenView-TestSuite.git tests` from the source directory, or unpack the zip there.
 
 ```bash
 meson setup build -Dtests=true
